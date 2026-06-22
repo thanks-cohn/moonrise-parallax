@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moonrise Tribute</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="scroll-space" aria-label="Una experiencia de luna naciente dedicada a papá">
+    <section class="scene" aria-live="polite">
+      <!-- 1. Cinematic sky background, updated from scroll progress. -->
+      <div class="sky" aria-hidden="true">
+        <div class="stars"></div>
+        <div class="atmosphere atmosphere--sunset"></div>
+        <div class="atmosphere atmosphere--night"></div>
+      </div>
+
+      <!-- 2. Mythic moon, rising continuously from behind the horizon. -->
+      <img class="moon" src="moon.png" alt="" aria-hidden="true" />
+
+      <!-- 3. Transparent meadow/horizon foreground. -->
+      <div class="horizon-wrap" aria-hidden="true">
+        <img class="horizon" src="horizon.png" alt="" />
+      </div>
+
+      <!-- 4. Tribute text, revealed near the end of the scroll. -->
+      <div class="tribute" aria-label="Mensaje de tributo">
+        <p>Para mi papá, querido.</p>
+        <p>Me mostraste el hombre que podía llegar a ser.</p>
+        <p>Cada día agradezco haber tenido en mi vida un faro de deber, amor y respeto.</p>
+        <p>Espero que algún día pueda ser siquiera la mitad del hombre que eres tú.</p>
+        <p>Con todo mi cariño.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
