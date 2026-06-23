@@ -96,10 +96,10 @@ body {
 
 .moon {
   position: absolute;
-  z-index: 1;
+  z-index: 4;
   left: 50%;
   top: var(--moon-y);
-  width: clamp(190px, 34vmin, 430px);
+  width: clamp(260px, 42vmin, 650px);
   height: auto;
   transform: translate3d(-50%, -50%, 0);
   filter:
@@ -137,8 +137,8 @@ body {
   position: absolute;
   z-index: 2;
   left: 50%;
-  bottom: -6vh;
-  width: max(118vw, 1450px);
+  bottom: -2vh;
+  width: max(150vw, 2200px);
   transform: translateX(-50%);
   animation: meadow-breath 9s ease-in-out infinite;
   will-change: transform;
@@ -156,8 +156,9 @@ body {
   position: absolute;
   z-index: 3;
   left: 50%;
-  top: 50%;
-  width: min(86vw, 820px);
+  top: 58%;
+  width: min(78vw, 720px);
+  padding-inline: 2rem;
   transform: translate3d(-50%, calc(-50% + var(--text-y)), 0);
   opacity: var(--text-opacity);
   text-align: center;
@@ -166,9 +167,9 @@ body {
     0 0 16px rgba(255, 246, 209, .48),
     0 4px 24px rgba(0, 0, 0, .55);
   font-family: "Alex Brush", cursive;
-  font-size: clamp(2.15rem, 2.2vw + 1.25rem, 4rem);
+  font-size: clamp(1.6rem, 1.4vw + 1rem, 2.9rem);
   font-weight: 400;
-  line-height: 1.22;
+  line-height: 1.35;
   letter-spacing: .01em;
   pointer-events: none;
   will-change: opacity, transform;
@@ -186,7 +187,12 @@ body {
   .hero-title { top: clamp(2.25rem, 9vh, 5rem); font-size: clamp(3.2rem, 17vw, 6.3rem); }
   .horizon-wrap { width: max(190vw, 900px); bottom: -3vh; }
   .moon { width: clamp(180px, 58vw, 310px); }
-  .tribute { width: min(90vw, 560px); font-size: clamp(2rem, 8.4vw, 3.35rem); line-height: 1.12; }
+  .tribute {
+    width: min(94vw, 560px);
+    padding-inline: 1rem;
+    font-size: clamp(1.5rem, 6vw, 2.3rem);
+    line-height: 1.25;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

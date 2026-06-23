@@ -27,7 +27,7 @@ function render() {
 
   // Continuous, restrained parallax moonrise: hidden low at first, fully risen by the finale.
   const moonEase = smoothstep(0, 1, latestProgress);
-  const moonY = lerp(82, 27, moonEase); // vh units
+  const moonY = lerp(95, 8, moonEase); // vh units
 
   // Layer dusk and night gradients for a three-phase cinematic sky transition.
   const duskOpacity = Math.sin(Math.PI * clamp(latestProgress * 1.08));
