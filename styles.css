@@ -3,6 +3,8 @@
   --moon-y: 72vh;
   --text-opacity: 0;
   --text-y: 28px;
+  --title-opacity: 1;
+  --title-y: 0px;
   --night-opacity: 0;
   --dusk-opacity: 0;
 }
@@ -20,7 +22,7 @@ body {
   min-height: 300vh;
   margin: 0;
   overflow-x: hidden;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Alex Brush", cursive;
 }
 
 .scroll-space { min-height: 300vh; }
@@ -108,12 +110,35 @@ body {
   user-select: none;
 }
 
+.hero-title {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: clamp(2.75rem, 11vh, 7.5rem);
+  width: min(92vw, 980px);
+  margin: 0;
+  transform: translate3d(-50%, var(--title-y), 0);
+  opacity: var(--title-opacity);
+  color: rgba(255, 252, 237, .97);
+  font-family: "Alex Brush", cursive;
+  font-size: clamp(3.4rem, 9vw, 8.6rem);
+  font-weight: 400;
+  line-height: .9;
+  letter-spacing: .025em;
+  text-align: center;
+  text-shadow:
+    0 0 18px rgba(255, 245, 211, .56),
+    0 8px 34px rgba(45, 31, 67, .32);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
 .horizon-wrap {
   position: absolute;
   z-index: 2;
   left: 50%;
   bottom: -6vh;
-  width: min(132vw, 1450px);
+  width: max(118vw, 1450px);
   transform: translateX(-50%);
   animation: meadow-breath 9s ease-in-out infinite;
   will-change: transform;
@@ -140,9 +165,11 @@ body {
   text-shadow:
     0 0 16px rgba(255, 246, 209, .48),
     0 4px 24px rgba(0, 0, 0, .55);
-  font-size: clamp(1.05rem, 1.15vw + .72rem, 1.78rem);
-  line-height: 1.62;
-  letter-spacing: .015em;
+  font-family: "Alex Brush", cursive;
+  font-size: clamp(2.15rem, 2.2vw + 1.25rem, 4rem);
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: .01em;
   pointer-events: none;
   will-change: opacity, transform;
 }
@@ -156,9 +183,10 @@ body {
 }
 
 @media (max-width: 700px) {
-  .horizon-wrap { width: 178vw; bottom: -3vh; }
+  .hero-title { top: clamp(2.25rem, 9vh, 5rem); font-size: clamp(3.2rem, 17vw, 6.3rem); }
+  .horizon-wrap { width: max(190vw, 900px); bottom: -3vh; }
   .moon { width: clamp(180px, 58vw, 310px); }
-  .tribute { width: min(88vw, 560px); font-size: clamp(.98rem, 3.1vw, 1.28rem); line-height: 1.54; }
+  .tribute { width: min(90vw, 560px); font-size: clamp(2rem, 8.4vw, 3.35rem); line-height: 1.12; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,6 +2,13 @@ const root = document.documentElement;
 let latestProgress = 0;
 let ticking = false;
 
+const DRIFT_SPEED = 28; // pixels per second: a quiet, gentle downward drift.
+const DRIFT_RESUME_DELAY = 3000;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let lastUserInteraction = performance.now();
+let lastDriftFrame = performance.now();
+let driftFrameId = null;
+
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const smoothstep = (edge0, edge1, value) => {
   const x = clamp((value - edge0) / (edge1 - edge0));
@@ -29,12 +36,17 @@ function render() {
   // Tribute reveal begins around 80% and drifts upward 28px as it fades in.
   const textProgress = smoothstep(0.8, 1, latestProgress);
 
+  // Storybook title remains during the moonrise, then makes room for the final dedication.
+  const titleFadeProgress = smoothstep(0.62, 0.84, latestProgress);
+
   root.style.setProperty('--progress', latestProgress.toFixed(4));
   root.style.setProperty('--moon-y', `${moonY.toFixed(2)}vh`);
   root.style.setProperty('--dusk-opacity', duskOpacity.toFixed(4));
   root.style.setProperty('--night-opacity', nightOpacity.toFixed(4));
   root.style.setProperty('--text-opacity', textProgress.toFixed(4));
   root.style.setProperty('--text-y', `${lerp(28, 0, textProgress).toFixed(2)}px`);
+  root.style.setProperty('--title-opacity', (1 - titleFadeProgress).toFixed(4));
+  root.style.setProperty('--title-y', `${lerp(0, -18, titleFadeProgress).toFixed(2)}px`);
 }
 
 function requestRender() {
@@ -44,7 +56,41 @@ function requestRender() {
   }
 }
 
+function noteUserInteraction() {
+  lastUserInteraction = performance.now();
+}
+
+function drift(now) {
+  const elapsed = Math.min((now - lastDriftFrame) / 1000, 0.08);
+  lastDriftFrame = now;
+
+  const userIsIdle = now - lastUserInteraction >= DRIFT_RESUME_DELAY;
+  const canDrift = !reducedMotion.matches && userIsIdle && window.scrollY < document.documentElement.scrollHeight - window.innerHeight - 1;
+
+  if (canDrift) {
+    window.scrollBy({ top: DRIFT_SPEED * elapsed, left: 0, behavior: 'auto' });
+  }
+
+  driftFrameId = requestAnimationFrame(drift);
+}
+
+const scrollKeys = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ']);
+
 window.addEventListener('scroll', requestRender, { passive: true });
 window.addEventListener('resize', requestRender);
 window.addEventListener('load', requestRender);
+window.addEventListener('wheel', noteUserInteraction, { passive: true });
+window.addEventListener('touchstart', noteUserInteraction, { passive: true });
+window.addEventListener('touchmove', noteUserInteraction, { passive: true });
+window.addEventListener('pointerdown', noteUserInteraction, { passive: true });
+window.addEventListener('keydown', (event) => {
+  if (scrollKeys.has(event.key)) {
+    noteUserInteraction();
+  }
+});
+
 requestRender();
+driftFrameId = requestAnimationFrame((now) => {
+  lastDriftFrame = now;
+  driftFrameId = requestAnimationFrame(drift);
+});
